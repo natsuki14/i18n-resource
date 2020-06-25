@@ -1,0 +1,63 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 4e1cf66ca2e43e1cc744d2ffa597c980d81a6a7a48a3a2de3f895fd5d8e0a7e2
+
+name:           i18n-resource
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/i18n-resource#readme>
+homepage:       https://github.com/githubuser/i18n-resource#readme
+bug-reports:    https://github.com/githubuser/i18n-resource/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/i18n-resource
+
+library
+  exposed-modules:
+      Data.I18n
+      Data.I18n.Internal
+      Data.I18n.ResourceList
+  other-modules:
+      Paths_i18n_resource
+  hs-source-dirs:
+      src
+  ghc-options: -Wno-tabs
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , http-media
+    , text
+    , unordered-containers
+  default-language: Haskell2010
+
+test-suite i18n-resource-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_i18n_resource
+  hs-source-dirs:
+      test
+  ghc-options: -Wno-tabs -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , http-media
+    , i18n-resource
+    , text
+    , unordered-containers
+  default-language: Haskell2010
