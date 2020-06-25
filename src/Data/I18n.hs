@@ -25,13 +25,13 @@ firstJusts = foldr firstJust Nothing
 mapFst :: (a -> b) -> (a, c) -> (b, c)
 mapFst f (a, b) = (f a, b)
 
-lookup :: Resource a res
+lookup :: Resource res a
 	=> res a
 	-> ByteString
 	-> Maybe a
 lookup = Media.mapAcceptLanguage . toList
 
-pickup :: Resource a res
+pickup :: Resource res a
 	=> res a
 	-> [ByteString]
 	-> a

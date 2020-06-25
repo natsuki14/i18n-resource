@@ -15,7 +15,7 @@ newtype ResourceList a = ResourceList {
 	unI18nResource :: [(Media.Language, a)]
 }
 
-instance (Resource a) ResourceList where
+instance Resource ResourceList a where
 	unsafeFromList = ResourceList
 	toList         = unI18nResource
 
