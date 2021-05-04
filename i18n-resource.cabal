@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4e1cf66ca2e43e1cc744d2ffa597c980d81a6a7a48a3a2de3f895fd5d8e0a7e2
+-- hash: 04563cefd721cb72b2b856f85c7aba8fb82c13f66f9c1a851ef56b2447da749a
 
 name:           i18n-resource
 version:        0.1.0.0
@@ -27,37 +27,35 @@ source-repository head
 
 library
   exposed-modules:
-      Data.I18n
-      Data.I18n.Internal
-      Data.I18n.ResourceList
+      Data.I18n.Resource
+      Data.I18n.Resource.Internal
   other-modules:
       Paths_i18n_resource
   hs-source-dirs:
       src
   ghc-options: -Wno-tabs
   build-depends:
-      aeson
-    , base >=4.7 && <5
+      base >=4.7 && <5
     , bytestring
+    , case-insensitive
+    , containers
     , http-media
-    , text
-    , unordered-containers
   default-language: Haskell2010
 
 test-suite i18n-resource-test
   type: exitcode-stdio-1.0
-  main-is: Spec.hs
+  main-is: Test.hs
   other-modules:
       Paths_i18n_resource
   hs-source-dirs:
       test
   ghc-options: -Wno-tabs -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      aeson
+      HUnit-unicode
     , base >=4.7 && <5
     , bytestring
+    , case-insensitive
+    , containers
     , http-media
     , i18n-resource
-    , text
-    , unordered-containers
   default-language: Haskell2010
