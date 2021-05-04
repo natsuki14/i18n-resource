@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Data.I18n.Resource.Internal where
@@ -9,9 +10,12 @@ import Data.CaseInsensitive (CI)
 import qualified Data.CaseInsensitive as CI
 import Data.Functor ((<&>))
 import qualified Data.List as List
+import Data.List.NonEmpty (NonEmpty)
+import qualified Data.List.NonEmpty as NonEmpty
 import Data.Map (Map)
 import qualified Data.Map as M
 import Data.Maybe (catMaybes)
+import GHC.Exts (IsList(..))
 import GHC.Generics (Generic)
 import Network.HTTP.Media (Language(..), toParts, parseAccept)
 
@@ -28,11 +32,27 @@ instance Show a => Show (Resource a) where
 			toByteString list = BS.intercalate "-" $ CI.original <$> reverse list
 			languageMap = catMaybes $ mapFstMaybe toLanguage <$> M.toList res
 
+instance IsList (Resource a) where
+	type Item (Resource a) = (Language, a)
+	fromList = fromNonEmpty . fromList
+	toList (Resource res) = undefined
+
+fromNonEmpty :: NonEmpty (Language, a) -> Resource a
+fromNonEmpty list = mainResource list' `union` subResource list' `union` defaultResource where
+	list' = NonEmpty.toList list
+	defaultResource = singleton "*" . snd $ NonEmpty.last list
+
 mapFst :: (a -> b) -> (a, c) -> (b, c)
 mapFst f (a, b) = (f a, b)
 
 mapFstMaybe :: (a -> Maybe b) -> (a, c) -> Maybe (b, c)
 mapFstMaybe f (a, b) = f a <&> \a' -> (a', b)
+
+singleton :: Language -> a -> Resource a
+singleton lang = Resource . M.singleton (toParts lang)
+
+union :: Resource a -> Resource a -> Resource a
+union (Resource a) (Resource b) = Resource $ M.union a b
 
 subLanguages :: [CI ByteString] -> [[CI ByteString]]
 subLanguages langs = reverse <$> go langs where

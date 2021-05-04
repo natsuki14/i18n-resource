@@ -8,7 +8,7 @@ import Data.Functor (void)
 
 
 resource :: Resource String
-resource = fromList [
+resource = [
 	("zh-Hant-CN", "歡迎"),
 	("zh-Hant-TW", "歡迎"),
 	("zh-Hans-CN", "欢迎"),
